@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti 💖</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 110%, rgba(255, 183, 130, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 15% 25%, rgba(255, 154, 180, 0.35) 0%, transparent 50%),
+        radial-gradient(ellipse 45% 35% at 85% 20%, rgba(180, 160, 255, 0.3) 0%, transparent 50%),
+        linear-gradient(180deg, #0b1026 0%, #1a1040 22%, #3d2060 48%, #8e3a5e 72%, #ffb07a 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+.stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 25% 8%, rgba(255,255,255,0.7) 50%, transparent 51%),
+        radial-gradient(1px 1px at 40% 22%, rgba(255,255,255,0.6) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 55% 12%, rgba(255,255,255,0.8) 50%, transparent 51%),
+        radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,0.5) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 85% 10%, rgba(255,255,255,0.75) 50%, transparent 51%),
+        radial-gradient(1px 1px at 92% 28%, rgba(255,255,255,0.6) 50%, transparent 51%),
+        radial-gradient(1px 1px at 18% 35%, rgba(255,255,255,0.45) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 78% 38%, rgba(255,255,255,0.55) 50%, transparent 51%);
+    animation: starsPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes starsPulse {
+    from { opacity: 0.6; }
+    to   { opacity: 1; }
+}
+
+#container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    z-index: 1;
+}
+
+svg {
+    width: min(440px, 94vw);
+    height: auto;
+    filter: drop-shadow(0 14px 36px rgba(0, 0, 0, 0.45));
+}
+
+.drawable {
+    fill: transparent;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: var(--len, 1000);
+    stroke-dashoffset: var(--len, 1000);
+    opacity: 0;
+    transition: fill 0.45s ease, opacity 0.15s;
+}
+
+.drawable.visible { opacity: 1; }
+.drawable.drawing { animation: drawStroke var(--dur, 0.5s) ease-out forwards; }
+.drawable.done { opacity: 1; stroke-dashoffset: 0; }
+
+@keyframes drawStroke {
+    to { stroke-dashoffset: 0; }
+}
+
+/* Oso */
+.bear-line    { stroke: #fff8f0; stroke-width: 2.2; }
+.bear-body-c  { stroke: #edd5bc; stroke-width: 2; }
+.bear-dark    { stroke: #a07850; stroke-width: 1.7; }
+.bear-pink    { stroke: #ffadc0; stroke-width: 1.5; }
+.eye-white    { stroke: #fff; stroke-width: 1.5; }
+
+.drawable.done.bear-body-c  { fill: #f2dcc8; }
+.drawable.done.bear-fill    { fill: #ffe8d4; }
+.drawable.done.bear-belly   { fill: #fff5eb; }
+.drawable.done.bear-inner-ear { fill: #ffc0d0; }
+.drawable.done.bear-nose    { fill: #8b6040; }
+.drawable.done.bear-blush   { fill: rgba(255, 150, 170, 0.55); stroke: none; }
+.drawable.done.eye-white    { fill: #fff; }
+.drawable.done.eye-fill     { fill: #2a1820; }
+.drawable.done.paw-pad      { fill: #ffb8c8; stroke: none; }
+.drawable.done.nose-shine    { fill: #fff; stroke: none; }
+
+/* Flores */
+.stem-line    { stroke: #4d8a4d; stroke-width: 2; }
+.leaf-line    { stroke: #5a9e5a; stroke-width: 1.6; }
+.petal-pink   { stroke: #ff5c8a; stroke-width: 1.4; }
+.petal-rose   { stroke: #ff8fab; stroke-width: 1.4; }
+.petal-peach  { stroke: #ffaa66; stroke-width: 1.3; }
+.petal-lav    { stroke: #c49bff; stroke-width: 1.3; }
+.center-yell  { stroke: #ffd966; stroke-width: 1.2; }
+.center-pink  { stroke: #ff7090; stroke-width: 1.2; }
+.ribbon-line  { stroke: #e8456a; stroke-width: 2; }
+.letter-line  { stroke: #ffe8a3; stroke-width: 2; }
+
+.drawable.done.leaf-fill    { fill: #7ecf7e; }
+.drawable.done.petal-pink   { fill: #ff6b9d; }
+.drawable.done.petal-rose   { fill: #ffa0b8; }
+.drawable.done.petal-peach  { fill: #ffbe80; }
+.drawable.done.petal-lav    { fill: #d4b0ff; }
+.drawable.done.center-yell  { fill: #ffe066; }
+.drawable.done.center-pink  { fill: #ff8098; }
+.drawable.done.ribbon-fill  { fill: #ff5c82; }
+.drawable.done.baby-breath   { fill: #fff; stroke: none; opacity: 0.85; }
+
+.sparkle {
+    fill: rgba(255, 255, 255, 0.7);
+    animation: twinkle 3s ease-in-out infinite;
+}
+.sparkle:nth-child(2) { animation-delay: 0.7s; }
+.sparkle:nth-child(3) { animation-delay: 1.4s; }
+.sparkle:nth-child(4) { animation-delay: 2.1s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50%       { opacity: 1; }
+}
+
+#letter.ready { cursor: pointer; }
+#letter.ready .drawable { stroke: #ffe8a3; }
+#letter.ready:hover .drawable {
+    stroke: #fff5cc;
+    filter: drop-shadow(0 0 8px rgba(255, 232, 163, 0.9));
+}
+
+.hint {
+    color: rgba(255, 240, 230, 0.9);
+    font-size: 14px;
+    min-height: 20px;
+    letter-spacing: 0.4px;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.4s;
+}
+.hint.hidden { opacity: 0; }
+
+.paper {
+    position: absolute;
+    bottom: 68px;
+    width: min(300px, 90vw);
+    background: linear-gradient(180deg, #fff 0%, #fff8f5 100%);
+    color: #3d2030;
+    padding: 26px 24px 22px;
+    border-radius: 14px;
+    opacity: 0;
+    transform: scale(0.85) translateY(14px);
+    transition: opacity 0.55s, transform 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
+    text-align: center;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.38), 0 0 0 2px rgba(255, 107, 138, 0.25);
+    pointer-events: none;
+}
+.paper::before {
+    content: "♥";
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    background: #ff6b8a;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 28px;
+    box-shadow: 0 4px 12px rgba(255, 107, 138, 0.5);
+}
+.open .paper {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+.paper p {
+    margin: 0;
+    font-size: 19px;
+    line-height: 1.55;
+    font-weight: 500;
+}
+.heart-seal {
+    fill: #ff6b8a;
+    stroke: #fff;
+    stroke-width: 1.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" aria-hidden="true"></div>
+
+<div id="container">
+
+<svg viewBox="0 0 240 340" aria-label="Oso con ramo y carta">
+
+    <!-- halo suave detrás del oso -->
+    <ellipse cx="120" cy="175" rx="70" ry="85" fill="rgba(255,200,180,0.08)"/>
+
+    <g id="sparkles" aria-hidden="true">
+        <circle class="sparkle" cx="28" cy="55" r="2"/>
+        <circle class="sparkle" cx="212" cy="80" r="1.8"/>
+        <circle class="sparkle" cx="200" cy="210" r="2.2"/>
+        <circle class="sparkle" cx="38" cy="240" r="1.6"/>
+    </g>
+
+    <!-- ═══ FASE 1: OSITO ═══ -->
+    <g id="bear" data-phase="bear">
+
+        <!-- cuerpo -->
+        <ellipse class="drawable bear-line bear-body-c" data-order="1" cx="120" cy="202" rx="44" ry="50"/>
+        <!-- panza -->
+        <ellipse class="drawable bear-line bear-belly" data-order="2" cx="120" cy="210" rx="26" ry="32"/>
+        <!-- cabeza -->
+        <circle class="drawable bear-line bear-fill" data-order="3" cx="120" cy="110" r="45"/>
+        <!-- mejillas (detrás de hocico) -->
+        <circle class="drawable bear-pink bear-blush" data-order="4" cx="86" cy="120" r="8"/>
+        <circle class="drawable bear-pink bear-blush" data-order="4" cx="154" cy="120" r="8"/>
+        <!-- orejas -->
+        <circle class="drawable bear-line bear-fill" data-order="5" cx="80" cy="68" r="18"/>
+        <circle class="drawable bear-line bear-fill" data-order="5" cx="160" cy="68" r="18"/>
+        <circle class="drawable bear-pink bear-inner-ear" data-order="6" cx="80" cy="70" r="10"/>
+        <circle class="drawable bear-pink bear-inner-ear" data-order="6" cx="160" cy="70" r="10"/>
+        <!-- hocico -->
+        <ellipse class="drawable bear-line bear-fill" data-order="7" cx="120" cy="122" rx="17" ry="13"/>
+        <!-- nariz -->
+        <path class="drawable bear-dark bear-nose" data-order="8"
+              d="M120 115 C116 115 113 118 113 121 C113 125 120 128 120 128 C120 128 127 125 127 121 C127 118 124 115 120 115 Z"/>
+        <circle class="drawable nose-shine" data-order="9" cx="117" cy="119" r="1.5"/>
+        <!-- boca -->
+        <path class="drawable bear-dark" data-order="10" d="M120 128 L120 132"/>
+        <path class="drawable bear-dark" data-order="10" d="M108 134 Q120 144 132 134"/>
+        <!-- ojos -->
+        <ellipse class="drawable eye-white" data-order="11" cx="103" cy="104" rx="7" ry="8"/>
+        <ellipse class="drawable eye-white" data-order="11" cx="137" cy="104" rx="7" ry="8"/>
+        <circle class="drawable bear-dark eye-fill" data-order="12" cx="104" cy="105" r="4.5"/>
+        <circle class="drawable bear-dark eye-fill" data-order="12" cx="138" cy="105" r="4.5"/>
+        <circle class="drawable nose-shine" data-order="13" cx="106" cy="103" r="2"/>
+        <circle class="drawable nose-shine" data-order="13" cx="140" cy="103" r="2"/>
+        <!-- brazos -->
+        <path class="drawable bear-line" data-order="14" d="M80 184 Q66 180 70 170 Q74 158 86 162"/>
+        <path class="drawable bear-line" data-order="14" d="M160 184 Q174 180 170 170 Q166 158 154 162"/>
+        <!-- patas traseras -->
+        <ellipse class="drawable bear-line bear-fill" data-order="15" cx="90" cy="248" rx="17" ry="10"/>
+        <ellipse class="drawable bear-line bear-fill" data-order="15" cx="150" cy="248" rx="17" ry="10"/>
+        <!-- almohadillas patas -->
+        <ellipse class="drawable bear-pink paw-pad" data-order="16" cx="90" cy="250" rx="9" ry="5"/>
+        <ellipse class="drawable bear-pink paw-pad" data-order="16" cx="150" cy="250" rx="9" ry="5"/>
+    </g>
+
+    <!-- ═══ FASE 2: RAMO ═══ -->
+    <g id="bouquet" data-phase="bouquet">
+
+        <!-- tallos -->
+        <path class="drawable stem-line" data-order="1" d="M86 162 Q96 174 112 186"/>
+        <path class="drawable stem-line" data-order="1" d="M154 162 Q144 174 128 186"/>
+        <path class="drawable stem-line" data-order="2" d="M120 186 L120 174"/>
+
+        <!-- hojas -->
+        <path class="drawable leaf-line leaf-fill" data-order="3"
+              d="M104 180 C96 176 94 182 98 186 C102 186 104 180 104 180"/>
+        <path class="drawable leaf-line leaf-fill" data-order="3"
+              d="M136 180 C144 176 146 182 142 186 C138 186 136 180 136 180"/>
+        <path class="drawable leaf-line leaf-fill" data-order="4"
+              d="M118 188 C110 184 110 192 116 194 C120 192 118 188 118 188"/>
+
+        <!-- lazo -->
+        <path class="drawable ribbon-line ribbon-fill" data-order="5" d="M110 186 Q120 196 130 186"/>
+        <path class="drawable ribbon-line ribbon-fill" data-order="5" d="M110 186 Q102 200 94 196"/>
+        <path class="drawable ribbon-line ribbon-fill" data-order="5" d="M130 186 Q138 200 146 196"/>
+
+        <!-- FLOR ROSA centro (120, 170) -->
+        <ellipse class="drawable petal-pink" data-order="6" cx="120" cy="161" rx="5" ry="10" transform="rotate(0   120 170)"/>
+        <ellipse class="drawable petal-pink" data-order="6" cx="120" cy="161" rx="5" ry="10" transform="rotate(72  120 170)"/>
+        <ellipse class="drawable petal-pink" data-order="6" cx="120" cy="161" rx="5" ry="10" transform="rotate(144 120 170)"/>
+        <ellipse class="drawable petal-pink" data-order="6" cx="120" cy="161" rx="5" ry="10" transform="rotate(216 120 170)"/>
+        <ellipse class="drawable petal-pink" data-order="6" cx="120" cy="161" rx="5" ry="10" transform="rotate(288 120 170)"/>
+        <ellipse class="drawable petal-rose" data-order="7" cx="120" cy="164" rx="4" ry="7" transform="rotate(36  120 170)"/>
+        <ellipse class="drawable petal-rose" data-order="7" cx="120" cy="164" rx="4" ry="7" transform="rotate(108 120 170)"/>
+        <ellipse class="drawable petal-rose" data-order="7" cx="120" cy="164" rx="4" ry="7" transform="rotate(180 120 170)"/>
+        <ellipse class="drawable petal-rose" data-order="7" cx="120" cy="164" rx="4" ry="7" transform="rotate(252 120 170)"/>
+        <ellipse class="drawable petal-rose" data-order="7" cx="120" cy="164" rx="4" ry="7" transform="rotate(324 120 170)"/>
+        <circle class="drawable center-pink" data-order="8" cx="120" cy="170" r="4"/>
+
+        <!-- FLOR izquierda (96, 176) -->
+        <ellipse class="drawable petal-rose" data-order="9"  cx="96" cy="167" rx="4.5" ry="9" transform="rotate(0   96 176)"/>
+        <ellipse class="drawable petal-rose" data-order="9"  cx="96" cy="167" rx="4.5" ry="9" transform="rotate(60  96 176)"/>
+        <ellipse class="drawable petal-rose" data-order="9"  cx="96" cy="167" rx="4.5" ry="9" transform="rotate(120 96 176)"/>
+        <ellipse class="drawable petal-rose" data-order="9"  cx="96" cy="167" rx="4.5" ry="9" transform="rotate(180 96 176)"/>
+        <ellipse class="drawable petal-rose" data-order="9"  cx="96" cy="167" rx="4.5" ry="9" transform="rotate(240 96 176)"/>
+        <ellipse class="drawable petal-rose" data-order="9"  cx="96" cy="167" rx="4.5" ry="9" transform="rotate(300 96 176)"/>
+        <circle class="drawable center-yell" data-order="10" cx="96" cy="176" r="3.5"/>
+
+        <!-- FLOR derecha (144, 176) -->
+        <ellipse class="drawable petal-rose" data-order="11" cx="144" cy="167" rx="4.5" ry="9" transform="rotate(0   144 176)"/>
+        <ellipse class="drawable petal-rose" data-order="11" cx="144" cy="167" rx="4.5" ry="9" transform="rotate(60  144 176)"/>
+        <ellipse class="drawable petal-rose" data-order="11" cx="144" cy="167" rx="4.5" ry="9" transform="rotate(120 144 176)"/>
+        <ellipse class="drawable petal-rose" data-order="11" cx="144" cy="167" rx="4.5" ry="9" transform="rotate(180 144 176)"/>
+        <ellipse class="drawable petal-rose" data-order="11" cx="144" cy="167" rx="4.5" ry="9" transform="rotate(240 144 176)"/>
+        <ellipse class="drawable petal-rose" data-order="11" cx="144" cy="167" rx="4.5" ry="9" transform="rotate(300 144 176)"/>
+        <circle class="drawable center-yell" data-order="12" cx="144" cy="176" r="3.5"/>
+
+        <!-- FLOR durazno arriba izq (108, 162) -->
+        <ellipse class="drawable petal-peach" data-order="13" cx="108" cy="155" rx="4" ry="8" transform="rotate(0   108 162)"/>
+        <ellipse class="drawable petal-peach" data-order="13" cx="108" cy="155" rx="4" ry="8" transform="rotate(72  108 162)"/>
+        <ellipse class="drawable petal-peach" data-order="13" cx="108" cy="155" rx="4" ry="8" transform="rotate(144 108 162)"/>
+        <ellipse class="drawable petal-peach" data-order="13" cx="108" cy="155" rx="4" ry="8" transform="rotate(216 108 162)"/>
+        <ellipse class="drawable petal-peach" data-order="13" cx="108" cy="155" rx="4" ry="8" transform="rotate(288 108 162)"/>
+        <circle class="drawable center-yell" data-order="14" cx="108" cy="162" r="3"/>
+
+        <!-- FLOR lavanda arriba der (132, 162) -->
+        <ellipse class="drawable petal-lav" data-order="15" cx="132" cy="155" rx="4" ry="8" transform="rotate(0   132 162)"/>
+        <ellipse class="drawable petal-lav" data-order="15" cx="132" cy="155" rx="4" ry="8" transform="rotate(72  132 162)"/>
+        <ellipse class="drawable petal-lav" data-order="15" cx="132" cy="155" rx="4" ry="8" transform="rotate(144 132 162)"/>
+        <ellipse class="drawable petal-lav" data-order="15" cx="132" cy="155" rx="4" ry="8" transform="rotate(216 132 162)"/>
+        <ellipse class="drawable petal-lav" data-order="15" cx="132" cy="155" rx="4" ry="8" transform="rotate(288 132 162)"/>
+        <circle class="drawable center-pink" data-order="16" cx="132" cy="162" r="3"/>
+
+        <!-- gypsophila (pequeñas florecitas blancas) -->
+        <circle class="drawable baby-breath" data-order="17" cx="84"  cy="180" r="2"/>
+        <circle class="drawable baby-breath" data-order="17" cx="88"  cy="176" r="1.8"/>
+        <circle class="drawable baby-breath" data-order="17" cx="82"  cy="174" r="1.6"/>
+        <circle class="drawable baby-breath" data-order="17" cx="156" cy="180" r="2"/>
+        <circle class="drawable baby-breath" data-order="17" cx="152" cy="176" r="1.8"/>
+        <circle class="drawable baby-breath" data-order="17" cx="158" cy="174" r="1.6"/>
+        <circle class="drawable baby-breath" data-order="17" cx="120" cy="158" r="1.8"/>
+        <circle class="drawable baby-breath" data-order="17" cx="116" cy="156" r="1.5"/>
+        <circle class="drawable baby-breath" data-order="17" cx="124" cy="156" r="1.5"/>
+
+        <!-- patitas sosteniendo -->
+        <ellipse class="drawable bear-line bear-fill" data-order="18" cx="84" cy="166" rx="11" ry="9"/>
+        <ellipse class="drawable bear-line bear-fill" data-order="18" cx="156" cy="166" rx="11" ry="9"/>
+        <ellipse class="drawable bear-pink paw-pad" data-order="19" cx="84" cy="168" rx="6" ry="4"/>
+        <ellipse class="drawable bear-pink paw-pad" data-order="19" cx="156" cy="168" rx="6" ry="4"/>
+    </g>
+
+    <!-- ═══ FASE 3: CARTA ═══ -->
+    <g id="letter" data-phase="letter">
+        <rect class="drawable letter-line" data-order="1" x="68" y="268" width="104" height="62" rx="4"/>
+        <path class="drawable letter-line" data-order="2" d="M68 268 L120 302 L172 268"/>
+        <line class="drawable letter-line" data-order="3" x1="68" y1="268" x2="120" y2="302"/>
+        <line class="drawable letter-line" data-order="4" x1="172" y1="268" x2="120" y2="302"/>
+        <path class="drawable heart-seal" data-order="5"
+              d="M120 290 C115 283 105 283 105 290 C105 297 120 306 120 306 C120 306 135 297 135 290 C135 283 125 283 120 290 Z"/>
+    </g>
+
+</svg>
+
+<p class="hint" id="hint">Dibujando...</p>
+
+<div class="paper">
+    <p id="text"></p>
+</div>
+
+</div>
+
+<script>
+const message = "Mi amor, felices 9 meses De verdad han sido los meses más bonitos de mi vida, gracias por cada momento, por tu cariño y por estar siempre conmigo. Yo también te amo muchísimo y quiero seguir construyendo muchos más recuerdos a tu lado. Eres muy especial para mí te amo mucho mi amor ❤️❤️";
+const PHASES = ["bear", "bouquet", "letter"];
+const PHASE_HINTS = {
+    bear: "Dibujando al osito...",
+    bouquet: "Agregando el ramo...",
+    letter: "Preparando la carta..."
+};
+const ELEMENT_DURATION = 340;
+const PHASE_PAUSE = 500;
+
+function getLength(el) {
+    if (typeof el.getTotalLength === "function") {
+        const len = el.getTotalLength();
+        if (len > 0) return len;
+    }
+    const tag = el.tagName.toLowerCase();
+    if (tag === "circle") return 2 * Math.PI * parseFloat(el.getAttribute("r") || 0);
+    if (tag === "ellipse") {
+        const rx = parseFloat(el.getAttribute("rx") || 0);
+        const ry = parseFloat(el.getAttribute("ry") || 0);
+        return Math.PI * (3 * (rx + ry) - Math.sqrt((3 * rx + ry) * (rx + 3 * ry)));
+    }
+    if (tag === "line") {
+        const x1 = parseFloat(el.getAttribute("x1"));
+        const y1 = parseFloat(el.getAttribute("y1"));
+        const x2 = parseFloat(el.getAttribute("x2"));
+        const y2 = parseFloat(el.getAttribute("y2"));
+        return Math.hypot(x2 - x1, y2 - y1);
+    }
+    if (tag === "rect") {
+        const w = parseFloat(el.getAttribute("width") || 0);
+        const h = parseFloat(el.getAttribute("height") || 0);
+        return 2 * (w + h);
+    }
+    return 200;
+}
+
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function drawElement(el) {
+    const len = getLength(el);
+    el.style.setProperty("--len", len);
+    el.style.setProperty("--dur", ELEMENT_DURATION + "ms");
+    el.classList.add("visible", "drawing");
+
+    return new Promise(resolve => {
+        const onEnd = () => {
+            el.removeEventListener("animationend", onEnd);
+            el.classList.remove("drawing");
+            el.classList.add("done");
+            resolve();
+        };
+        el.addEventListener("animationend", onEnd);
+    });
+}
+
+async function drawPhase(phaseName) {
+    const hint = document.getElementById("hint");
+    hint.textContent = PHASE_HINTS[phaseName];
+
+    const group = document.querySelector(`[data-phase="${phaseName}"]`);
+    const elements = [...group.querySelectorAll(".drawable")];
+
+    const byOrder = new Map();
+    for (const el of elements) {
+        const order = el.dataset.order;
+        if (!byOrder.has(order)) byOrder.set(order, []);
+        byOrder.get(order).push(el);
+    }
+
+    const orders = [...byOrder.keys()].sort((a, b) => Number(a) - Number(b));
+    for (const order of orders) {
+        await Promise.all(byOrder.get(order).map(drawElement));
+    }
+}
+
+async function startDrawing() {
+    for (const phase of PHASES) {
+        await drawPhase(phase);
+        await wait(PHASE_PAUSE);
+    }
+
+    const hint = document.getElementById("hint");
+    hint.textContent = "Toca la carta para abrirla 💌";
+    document.getElementById("letter").classList.add("ready");
+    document.getElementById("letter").addEventListener("click", openLetter, { once: true });
+}
+
+function openLetter() {
+    document.getElementById("container").classList.add("open");
+    document.getElementById("hint").classList.add("hidden");
+    typeText(message);
+}
+
+function typeText(text) {
+    let i = 0;
+    const output = document.getElementById("text");
+    output.textContent = "";
+
+    function typing() {
+        if (i < text.length) {
+            output.textContent += text.charAt(i);
+            i++;
+            setTimeout(typing, 45);
+        }
+    }
+
+    typing();
+}
+
+startDrawing();
+</script>
+
+</body>
+</html>
